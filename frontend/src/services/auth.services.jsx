@@ -13,7 +13,7 @@ export const addLoginToServer= async (email,password,navigate,setToken,setError)
   if(res.ok){
     localStorage.setItem("token", data.token);
     setToken(data.token);
-    navigate("/todos");
+    navigate("/todos")
   }else{
     setError(data.msg);
   }

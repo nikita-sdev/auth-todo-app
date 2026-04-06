@@ -1,4 +1,4 @@
-import {BrowserRouter, Route,Routes} from 'react-router-dom'
+import {BrowserRouter, Navigate, Route,Routes} from 'react-router-dom'
 import { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
@@ -14,14 +14,17 @@ import Profile from './components/profile';
 
 function App() {
   
+  const [token,setToken]= useState(localStorage.getItem("token"));
   const [newTodo, setNewTodo] =useState([]);
   const [error, setError]=useState();
 
   useEffect(()=>{
-    getTodoFromServer().then((initialItems)=>{
-      setNewTodo(initialItems)
-    })
-  })
+    if(token){
+      getTodoFromServer().then((initialItems)=>{
+        setNewTodo(initialItems)
+      })
+    }
+  },[token])
 
   const handleNewTodo=async (newTask,newDate)=>{ 
     const item =  await addTodoToServer(newTask,newDate,setError)
@@ -57,16 +60,14 @@ function App() {
     setNewTodo(updatedTodo);
   }
 
-  const [token,setToken]= useState(localStorage.getItem("token"));
-
   useEffect(()=>{
     const handleStorage=()=>{
       setToken(localStorage.getItem("token"));
     }
 
-    window.addEventListener("Storage", handleStorage);
+    window.addEventListener("storage", handleStorage);
 
-    return ()=> window.removeEventListener("Storage", handleStorage);
+    return ()=> window.removeEventListener("storage", handleStorage);
   }, []);
 
   return (
@@ -76,6 +77,10 @@ function App() {
       <Navbar></Navbar>
     ):<></>}
     <Routes>
+      <Route
+        path='/'
+        element={token? <Navigate to="/todos"></Navigate>: <Navigate to="/login"></Navigate>}
+      ></Route>
       {!token? (
         <>
         <Route path="/login" element={<UserLogin setToken={setToken} ></UserLogin>} ></Route>
@@ -88,7 +93,7 @@ function App() {
         <Route path="/add-task" element={<Addtask handleNewTodo={handleNewTodo} error={error} ></Addtask>}></Route>
         <Route path="/user-profile" element={<Profile></Profile>}></Route>
         <Route path="/logout" element={<Logout setToken={setToken} ></Logout>}></Route>
-        <Route path="*" element={<Home></Home>}></Route>
+        <Route path="*" element={<Home todoItems={newTodo} onDeleteItem={handleDeleteItem} onUpdateItem={handleUpdateItem}></Home>}></Route>
         </>
       )
       }
