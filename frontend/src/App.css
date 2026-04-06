@@ -1,0 +1,168 @@
+body{
+  background-color: #ccc;
+}
+
+.container-nav{
+  background-color: #777;
+}
+
+/* Add todo */
+.add-todo{
+  padding: 20px;
+  margin-top: 100px;
+  margin-left: 30%;
+  border: 2px solid #777;
+  border-radius: 10px;
+  max-width: 500px;
+  background-color: white;
+}
+
+.add-todo h1{
+  font-size: 50px;
+  font-family: sans-serif;
+  color: #31363F;
+}
+
+.todo-form{
+  display: flex;
+  flex-direction: column;
+}
+.todo-form label{
+  padding: 10px;
+  font-size: 25px;
+  font-weight: 500;
+}
+.todo-form input{
+  padding: 6px 8px;
+}
+.todo-button{
+  background-color: rgb(5, 178, 5);
+  padding: 5px 6px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  cursor: pointer;
+}
+.todo-button:hover{
+  background-color: rgb(6, 116, 6);
+}
+/* Home */
+
+.todoContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+.heading{
+  font-weight: bold;
+  font-size: 38px;
+  font-family: sans-serif;
+  color: #222831;
+}
+.todo div{
+  padding: 10px;
+  margin: 50px;
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #777;
+  border-radius: 7px;
+}
+.todo input{
+  padding: 10px 20px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #171c24;
+  font-family: sans-serif;
+  border-radius: 5px;
+  border: none;
+}
+.edit-submit{
+  background-color: rgb(9, 167, 9);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 0 10px;
+  font-weight: 500;
+}
+.edit-submit:hover{
+  background-color: rgb(9, 113, 9);
+}
+.todo span{
+  padding: 10px 20px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #171c24;
+  font-family: sans-serif;
+}
+.dlt-btn{
+  font-weight: 600;
+  font-size: 20px;
+  background-color: rgb(197, 28, 28);
+  border: none;
+  padding: 0 15px;
+  border-radius: 5px;
+  color: white;
+}
+
+.edit-btn{
+  background-color: rgb(81, 156, 199);
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 10px;
+}
+.dlt-btn:hover{
+  background-color: rgb(161, 22, 22);
+}
+.edit-btn:hover{
+  background-color: rgb(38, 135, 157);
+}
+
+.btn-div{
+  display: flex;
+  justify-content: center;
+  padding: 2cap;
+  gap: 50px;
+}
+
+.login{
+  margin-top: 10px;
+  padding: 5px;
+  background-color: rgb(23, 208, 233);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.errorPara{
+  margin-top: 10px;
+  font-size: 20px;
+  color: red;
+}
+
+.profile-form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-form span{
+  font-size: 25px;
+  font-weight: 600;
+  color: #364a6a;
+}
+
+.btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
