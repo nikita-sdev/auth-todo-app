@@ -22,7 +22,7 @@ export const getProfileFromServer =async ( )=>{
 
 export const addProfileToServer= async(userName, firstName, lastName, setError)=>{
   const token = localStorage.getItem("token");
-  const res= await fetch(`${BASE_URL}}/api/todo/user-profile`,
+  const res= await fetch(`${BASE_URL}/api/todo/user-profile`,
     {
       method:"POST",
       headers:{

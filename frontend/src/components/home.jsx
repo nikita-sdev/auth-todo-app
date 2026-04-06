@@ -61,6 +61,7 @@ const Home=({todoItems, onDeleteItem,onUpdateItem})=>{
             </div>
           </ul>
         ))}
+        <a href="/add-task" className="btn btn-primary w-100">Add Todo</a>
       </div>
     </div>
   )

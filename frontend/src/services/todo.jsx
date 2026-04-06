@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_URL
 
 export const addTodoToServer= async(task,date,setError)=>{
   const token= localStorage.getItem("token");
-  const res=await fetch("http://localhost:5000/api/todo/add-task", {
+  const res=await fetch(`${BASE_URL}/api/todo/add-task`, {
     method:"POST",
     headers:{
       "Content-Type":"application/json",
