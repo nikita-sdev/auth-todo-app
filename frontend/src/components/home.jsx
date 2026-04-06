@@ -29,13 +29,13 @@ const Home=({todoItems, onDeleteItem,onUpdateItem})=>{
               className="form-control"
               onChange={(e)=>setCurDate(e.target.value)}
               ></input>
-              <button className="btn btn-success"
+              <button className="btn btn-primary w-100 mt-2"
               onClick={()=>{
                 onUpdateItem(editing,updatedTask,curDate)
                 setEditing(null);
                 setUpdatedTask("");
               }}
-              >submit
+              >Update
               </button>
               </div>
             ) :( 

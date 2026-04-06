@@ -1,3 +1,5 @@
+const BASE_URL = import.meta.env.VITE_API_URL
+
 export const addTodoToServer= async(task,date,setError)=>{
   const token= localStorage.getItem("token");
   const res=await fetch("http://localhost:5000/api/todo/add-task", {
@@ -19,7 +21,7 @@ export const addTodoToServer= async(task,date,setError)=>{
 
 export const getTodoFromServer = async ()=>{
   const token= localStorage.getItem("token")
-  const res= await fetch("http://localhost:5000/api/todo/todos",{
+  const res= await fetch(`${BASE_URL}/api/todo/todos`,{
     headers:{
       Authorization:token
     }
@@ -30,7 +32,7 @@ export const getTodoFromServer = async ()=>{
 
 export const deleteTodoFromServer= async(id)=>{
   const token= localStorage.getItem("token");
-  const res= await fetch(`http://localhost:5000/api/todo/${id}`,{
+  const res= await fetch(`${BASE_URL}/api/todo/${id}`,{
     method:"DELETE",
     headers:{
       Authorization:token,
@@ -42,7 +44,7 @@ export const deleteTodoFromServer= async(id)=>{
 
 export const editTaskInServer = async(id, updatedTask,date)=>{
   const token= localStorage.getItem("token");
-  const res= await fetch(`http://localhost:5000/api/todo/${id}`,{
+  const res= await fetch(`${BASE_URL}/api/todo/${id}`,{
     method:"PUT",
     headers:{
       "Content-Type": "application/json",
