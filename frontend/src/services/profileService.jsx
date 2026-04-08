@@ -5,7 +5,7 @@ export const getProfileFromServer =async ( )=>{
   const res= await fetch(`${BASE_URL}/api/todo/user-profile`,
     {
       headers:{
-      Authorization:token
+      Authorization:`Bearer ${token}`,
       }
     }
   )
@@ -29,8 +29,9 @@ export const addProfileToServer= async(userName, firstName, lastName, setError)=
       body: JSON.stringify({userName,firstName,lastName}),
     })
     const data= await res.json();
-    if(data.msg==="Invalid token"){
+    if (res.status === 401) {
       localStorage.removeItem("token");
+      window.location.href = "/login";
     }
     if(res.ok){
       return data;
@@ -48,7 +49,7 @@ export const deleteProfileFromServer = async ()=>{
       Authorization: `Bearer ${token}`,
     }
   })
-  const data= res.json();
+  const data= await res.json();
   if(res.ok){
     return data;
   }
