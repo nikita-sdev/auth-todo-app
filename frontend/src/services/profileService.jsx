@@ -27,11 +27,14 @@ export const addProfileToServer= async(userName, firstName, lastName, setError)=
       method:"POST",
       headers:{
       "Content-Type": "application/json",
-      Authorization:token
+      Authorization:`Bearer ${token}`
       },
       body: JSON.stringify({userName,firstName,lastName}),
     })
     const data= await res.json();
+    if(data.msg==="Invalid token"){
+      localStorage.removeItem("token");
+    }
     if(res.ok){
       return data;
     }else{
@@ -44,7 +47,7 @@ export const deleteProfileFromServer = async ()=>{
     method: "DELETE",
     headers:{
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     }
   })
   const data= res.json();
@@ -58,11 +61,12 @@ export const updateProfileInServer= async(userName,firstName, lastName, setError
     method: "PUT",
     headers:{
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({userName, firstName, lastName}),
   })
   const data= await res.json();
+
   if(res.ok){
     return data;
   }else{

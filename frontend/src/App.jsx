@@ -33,11 +33,6 @@ function App() {
     }
 
     fetchTodos();
-    // if(token){
-    //   getTodoFromServer().then((initialItems)=>{
-    //     setNewTodo(initialItems)
-    //   })
-    // }
   },[token])
 
   const handleNewTodo=async (newTask,newDate)=>{ 

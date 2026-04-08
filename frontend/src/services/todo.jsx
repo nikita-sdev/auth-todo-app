@@ -6,7 +6,7 @@ export const addTodoToServer= async(task,date,setError)=>{
     method:"POST",
     headers:{
       "Content-Type":"application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({task,date})
   })
@@ -23,7 +23,7 @@ export const getTodoFromServer = async ()=>{
   const token= localStorage.getItem("token")
   const res= await fetch(`${BASE_URL}/api/todo/todos`,{
     headers:{
-      Authorization:token
+      Authorization:`Bearer ${token}`
     }
   })
   const items = await res.json();
@@ -35,7 +35,7 @@ export const deleteTodoFromServer= async(id)=>{
   const res= await fetch(`${BASE_URL}/api/todo/${id}`,{
     method:"DELETE",
     headers:{
-      Authorization:token,
+      Authorization:`Bearer ${token}`,
     }
   })
   const item= await res.json();
@@ -48,7 +48,7 @@ export const editTaskInServer = async(id, updatedTask,date)=>{
     method:"PUT",
     headers:{
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: `Bearer ${token}`,
     },
     body:JSON.stringify({
       task:updatedTask,
