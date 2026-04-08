@@ -1,8 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-const token = localStorage.getItem("token");
-
-
 export const getProfileFromServer =async ( )=>{
   const token=  localStorage.getItem("token");
   const res= await fetch(`${BASE_URL}/api/todo/user-profile`,
@@ -43,6 +40,7 @@ export const addProfileToServer= async(userName, firstName, lastName, setError)=
 }
 
 export const deleteProfileFromServer = async ()=>{
+  const token = localStorage.getItem("token");
   const res = await fetch(`${BASE_URL}/api/todo/user-profile`,{
     method: "DELETE",
     headers:{
@@ -57,6 +55,7 @@ export const deleteProfileFromServer = async ()=>{
 }
 
 export const updateProfileInServer= async(userName,firstName, lastName, setError)=>{
+  const token = localStorage.getItem("token");
   const res= await fetch(`${BASE_URL}/api/todo/user-profile`,{
     method: "PUT",
     headers:{

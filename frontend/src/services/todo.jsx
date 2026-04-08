@@ -27,6 +27,10 @@ export const getTodoFromServer = async ()=>{
     }
   })
   const items = await res.json();
+  if(!res.ok){
+    console.log(items.msg);
+    return [];
+  }
   return items.map(mapServerItemToLocalIte);
 }
 
