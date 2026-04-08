@@ -7,6 +7,7 @@ const Addtask=({handleNewTodo, error})=>{
 
   const [newTask, setNewTask] = useState();
   const [newDate, setNewDate] =useState();
+  const [loading, setLoading] = useState(false);
 
   const handleTask=(e)=>{
       setNewTask(e.target.value);
@@ -16,11 +17,21 @@ const Addtask=({handleNewTodo, error})=>{
   }
 
   const onButtonClick=async()=>{
+    setLoading(true);
     const item= await handleNewTodo(newTask,newDate);
     if(item){
       navigate("/todos");
+      setLoading(false);
     }
   }
+
+  if(loading)return(
+    <>
+    <div className="d-flex justify-content-center mt-5">
+      <div className="spinner-border text-primary"></div>
+    </div>
+    </>
+  )
 
   return (
     <div className="container mt-5 d-flex justify-content-center">

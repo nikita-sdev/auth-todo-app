@@ -9,6 +9,7 @@ const UserLogin = ({setToken})=>{
   const [email,setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] =useState("");
+  const [loading,setLoading]= useState(false);
 
   const handlemailChange= (e)=>{
     setEmail(e.target.value)
@@ -19,9 +20,19 @@ const UserLogin = ({setToken})=>{
   }
 
   const handleLogin=async ()=>{
+    setLoading(true);
     const user= await addLoginToServer(email,password,navigate, setToken, setError);
+    setLoading(false);
     console.log(user);
   }
+
+  if(loading)return(
+    <>
+    <div className="d-flex justify-content-center mt-5">
+      <div className="spinner-border text-primary"></div>
+    </div>
+    </>
+  )
 
   return (
     <div className="container mt-5 d-flex justify-content-center">

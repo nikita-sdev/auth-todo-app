@@ -17,47 +17,77 @@ function App() {
   const [token,setToken]= useState(localStorage.getItem("token"));
   const [newTodo, setNewTodo] =useState([]);
   const [error, setError]=useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
-    if(token){
-      getTodoFromServer().then((initialItems)=>{
-        setNewTodo(initialItems)
-      })
+    if(!token)return;
+    const fetchTodos= async()=>{
+      try{
+        setLoading(true);
+        const initialItems= await getTodoFromServer();
+        setNewTodo(initialItems);
+      }
+      finally{
+        setLoading(false);
+      }
     }
+
+    fetchTodos();
+    // if(token){
+    //   getTodoFromServer().then((initialItems)=>{
+    //     setNewTodo(initialItems)
+    //   })
+    // }
   },[token])
 
   const handleNewTodo=async (newTask,newDate)=>{ 
-    const item =  await addTodoToServer(newTask,newDate,setError)
-    if(!item)return;
-    const newTodoItem=[...newTodo, item]
-    setNewTodo(newTodoItem);
-    return item;
+    try{
+      setLoading(true);
+      const item =  await addTodoToServer(newTask,newDate,setError)
+      if(!item)return;
+      const newTodoItem=[...newTodo, item]
+      setNewTodo(newTodoItem);
+      return item;
+    }
+    finally{
+      setLoading(false);
+    }
   }
 
   const handleDeleteItem=async (id)=>{
-    const deleteId= await deleteTodoFromServer(id);
-    const newTodoItems= newTodo.filter(item=>item.id!=deleteId);
-    setNewTodo(newTodoItems);
+    try{
+      setLoading(true);
+      const deleteId= await deleteTodoFromServer(id);
+      const newTodoItems= newTodo.filter(item=>item.id!=deleteId);
+      setNewTodo(newTodoItems);
+    }
+    finally{
+      setLoading(false);
+    }
   }
 
   const handleUpdateItem = async(id,updatedTask,date)=>{
     try{
+      setLoading(true);
       await  editTaskInServer(id,updatedTask,date);
+      const updatedTodo= newTodo.map(item=>{
+        if(item.id===id){
+          return ({
+            ...item,
+            task:updatedTask,
+          })
+        }else{
+          return item;
+        }
+      })
+      setNewTodo(updatedTodo);
     }
     catch{
       console.log("Error");
     }
-    const updatedTodo= newTodo.map(item=>{
-      if(item.id===id){
-        return ({
-          ...item,
-          task:updatedTask,
-        })
-      }else{
-        return item;
-      }
-    })
-    setNewTodo(updatedTodo);
+    finally{
+      setLoading(false);
+    }
   }
 
   useEffect(()=>{
@@ -89,11 +119,11 @@ function App() {
         </>
       ):(
         <>
-        <Route path="/todos" element={<Home todoItems={newTodo} onDeleteItem={handleDeleteItem} onUpdateItem={handleUpdateItem} ></Home>}></Route>
+        <Route path="/todos" element={<Home todoItems={newTodo} onDeleteItem={handleDeleteItem} onUpdateItem={handleUpdateItem} loading={loading} ></Home>}></Route>
         <Route path="/add-task" element={<Addtask handleNewTodo={handleNewTodo} error={error} ></Addtask>}></Route>
         <Route path="/user-profile" element={<Profile></Profile>}></Route>
         <Route path="/logout" element={<Logout setToken={setToken} ></Logout>}></Route>
-        <Route path="*" element={<Home todoItems={newTodo} onDeleteItem={handleDeleteItem} onUpdateItem={handleUpdateItem}></Home>}></Route>
+        <Route path="*" element={<Home todoItems={newTodo} onDeleteItem={handleDeleteItem} onUpdateItem={handleUpdateItem} loading={loading}></Home>}></Route>
         </>
       )
       }

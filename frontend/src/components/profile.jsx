@@ -12,71 +12,86 @@ const Profile=()=>{
   const [error, setError]= useState("");
   const [profile, setProfile]=useState(null);
   const [editing, setEditing]= useState(false);
+  const [loading, setLoading] = useState(false);
 
   const addProfile= async()=>{
-    const res = await addProfileToServer(userName,firstName,lastName,setError);
-    if(res){
-      const data = await getProfileFromServer();
-      setProfile(data);
+    try{
+      setLoading(true);
+      const res = await addProfileToServer(userName,firstName,lastName,setError);
+      if(res){
+        const data = await getProfileFromServer();
+        setProfile(data);
+      }
+    }
+    finally{
+      setLoading(false);
     }
   }
 
 
   const updateProfile = async()=>{
-    const res = await updateProfileInServer(userName, firstName, lastName, setError);
-    console.log(res);
-    if(!res){
-      return;
-    }else{
-      const data = await getProfileFromServer();
-      setProfile(data);
+    try{
+      setLoading(true);
+      const res = await updateProfileInServer(userName, firstName, lastName, setError);
+      console.log(res);
+      if(!res){
+        return;
+      }else{
+        const data = await getProfileFromServer();
+        setProfile(data);
+      }
+      setEditing(false);
+      setUserName("");
+      setFirstName("");
+      setLastName("");
     }
-    setEditing(false);
-    setUserName("");
-    setFirstName("");
-    setLastName("");
+    finally{
+      setLoading(false);
+    }
   }
 
 
   const deleteProfile= async()=>{
-    const res= await deleteProfileFromServer();
-    if(res){
-      const data = await getProfileFromServer();
-      setProfile(data);
+    try{
+      setLoading(true);
+      const res= await deleteProfileFromServer();
+      if(res){
+        const data = await getProfileFromServer();
+        setProfile(data);
+      }
+    }
+    finally{
+      setLoading(false);
     }
   }
 
   useEffect(()=>{
     const fetchProfile = async()=>{
-      const data= await getProfileFromServer();
-      setProfile(data);
+      try{
+        setLoading(true);
+        const data= await getProfileFromServer();
+        setProfile(data);
+      }finally{
+        setLoading(false);
+      }
     };
     fetchProfile();
   }, []);
 
+
+  if(loading)return(
+    <>
+    <div className="d-flex justify-content-center mt-5">
+      <div className="spinner-border text-primary"></div>
+    </div>
+    </>
+  )
 
   return (
     <>
     {profile ? (
       !editing? (
         <>
-        {/* <div className="add-todo">
-        <h1>Your Profile</h1>
-        <div className="profile-form">
-          <span>UserName :  {profile.userName}</span>
-          <span>FirstName :  {profile.firstName}</span>
-          <span>LastName :  {profile.lastName}</span>
-        </div>
-        <div className="btns">
-          <button className="btn btn-danger" onClick={deleteProfile}>Delete</button>
-          <button className="btn btn-info" onClick={()=>{
-            setEditing(true);
-            setUserName(profile.userName)
-            setFirstName(profile.firstName)
-            setLastName(profile.lastName);
-          }}>Edit</button>
-        </div>
-        </div> */}
         <div className="container mt-5 d-flex justify-content-center">
           <div className="card shadow p-4 w-100" style={{ maxWidth: "500px" }}>
 

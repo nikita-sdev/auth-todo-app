@@ -2,10 +2,18 @@ import { useState } from "react";
 import { editTaskInServer } from "../services/todo";
 
 
-const Home=({todoItems, onDeleteItem,onUpdateItem})=>{
+const Home=({todoItems, onDeleteItem,onUpdateItem, loading})=>{
   const [editing,setEditing]=useState(null);
   const [updatedTask, setUpdatedTask] = useState("");
   const [curDate, setCurDate]= useState("");
+
+  if(loading)return(
+    <>
+    <div className="d-flex justify-content-center mt-5">
+      <div className="spinner-border text-primary"></div>
+    </div>
+    </>
+  )
 
   return (
     <div className="container mt-4">
